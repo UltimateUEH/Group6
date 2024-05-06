@@ -65,6 +65,16 @@ namespace Group6_WebApi.Controllers
                     .Where(d => d.InvoiceId == invoice.InvoiceId)
                     .ToList();
 
+                if (invoice.Customer != null)
+                {
+                    // Lưu khách hàng vào cơ sở dữ liệu và lấy customer_id (nếu khách hàng chưa tồn tại)
+                    int customerId = SaveCustomerAndGetId(invoice.Customer);
+
+                    // Gán customer_id cho invoice
+                    invoice.CustomerId = customerId;
+                    invoice.CustomerName = invoice.Customer.CustomerName;
+                }
+
                 // Tính tổng tiền
                 decimal? totalPrice = invoiceDetails.Sum(detail => detail.Quantity * detail.Price);
 
@@ -86,6 +96,25 @@ namespace Group6_WebApi.Controllers
             catch
             {
                 return BadRequest();
+            }
+        }
+
+        private int SaveCustomerAndGetId(Customer customer)
+        {
+            // Kiểm tra xem khách hàng đã tồn tại trong cơ sở dữ liệu chưa
+            var existingCustomer = _context.Customers.FirstOrDefault(c => c.CustomerName == customer.CustomerName);
+
+            if (existingCustomer != null)
+            {
+                // Trả về customer_id của khách hàng đã tồn tại
+                return existingCustomer.CustomerId;
+            }
+            else
+            {
+                // Lưu khách hàng mới vào cơ sở dữ liệu và trả về customer_id
+                _context.Customers.Add(customer);
+                _context.SaveChanges();
+                return customer.CustomerId;
             }
         }
 
@@ -125,6 +154,16 @@ namespace Group6_WebApi.Controllers
                         .Where(d => d.InvoiceId == invoice.InvoiceId)
                         .ToList();
 
+                    if (invoice.Customer != null)
+                    {
+                        // Lưu khách hàng vào cơ sở dữ liệu và lấy customer_id (nếu khách hàng chưa tồn tại)
+                        int customerId = SaveCustomerAndGetId(invoice.Customer);
+
+                        // Gán customer_id cho invoice
+                        invoice.CustomerId = customerId;
+                        invoice.CustomerName = invoice.Customer.CustomerName;
+                    }
+
                     // Tính tổng tiền
                     decimal? totalPrice = invoiceDetails.Sum(detail => detail.Quantity * detail.Price);
 
@@ -141,6 +180,8 @@ namespace Group6_WebApi.Controllers
                     // Cập nhật các thông tin khác của hóa đơn
                     existingInvoice.InvoiceDate = invoice.InvoiceDate;
                     existingInvoice.Status = invoice.Status;
+                    existingInvoice.CustomerId = invoice.CustomerId;
+                    existingInvoice.CustomerName = invoice.CustomerName;
 
                     _context.SaveChanges();
 
