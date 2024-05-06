@@ -11,6 +11,7 @@ namespace Group6_MVC.Controllers
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            // check new u see
         }
 
         public IActionResult Index()
