@@ -13,23 +13,18 @@ public partial class Tenant
     [Column("tenant_id")]
     public int TenantId { get; set; }
 
-    [Column("name")]
+    [Column("tenant_name")]
     [StringLength(255)]
-    public string? Name { get; set; }
-
-    [Column("address")]
-    [StringLength(255)]
-    public string? Address { get; set; }
-
-    [Column("contact_info")]
-    [StringLength(255)]
-    public string? ContactInfo { get; set; }
+    public string? TenantName { get; set; }
 
     [InverseProperty("Tenant")]
     public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
 
     [InverseProperty("Tenant")]
     public virtual ICollection<Company> Companies { get; set; } = new List<Company>();
+
+    [InverseProperty("Tenant")]
+    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
     [InverseProperty("Tenant")]
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();

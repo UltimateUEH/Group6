@@ -16,20 +16,23 @@ public partial class Company
     [Column("tenant_id")]
     public int? TenantId { get; set; }
 
-    [Column("name")]
+    [Column("company_name")]
     [StringLength(255)]
-    public string? Name { get; set; }
+    public string? CompanyName { get; set; }
 
-    [Column("address")]
+    [Column("company_email")]
     [StringLength(255)]
-    public string? Address { get; set; }
+    public string? CompanyEmail { get; set; }
 
-    [Column("contact_info")]
+    [Column("company_address")]
     [StringLength(255)]
-    public string? ContactInfo { get; set; }
+    public string? CompanyAddress { get; set; }
 
     [InverseProperty("Company")]
     public virtual ICollection<Account> Accounts { get; set; } = new List<Account>();
+
+    [InverseProperty("Company")]
+    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
     [ForeignKey("TenantId")]
     [InverseProperty("Companies")]

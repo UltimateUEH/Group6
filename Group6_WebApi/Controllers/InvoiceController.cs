@@ -22,7 +22,7 @@ namespace Group6_WebApi.Controllers
 
             return Ok(invoiceList);
         }
-        
+
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
