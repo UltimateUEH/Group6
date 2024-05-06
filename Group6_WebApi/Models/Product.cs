@@ -27,6 +27,9 @@ public partial class Product
     public string? ProductDescription { get; set; }
 
     [InverseProperty("Product")]
+    public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+
+    [InverseProperty("Product")]
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
     [ForeignKey("TenantId")]

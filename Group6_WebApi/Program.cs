@@ -1,3 +1,4 @@
+using Group6_WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Group6_WebApi
@@ -9,6 +10,8 @@ namespace Group6_WebApi
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddDbContext<Group06Context>(options =>
+                           options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

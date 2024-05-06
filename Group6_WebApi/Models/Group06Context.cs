@@ -23,23 +23,14 @@ public partial class Group06Context : DbContext
 
     public virtual DbSet<Invoice> Invoices { get; set; }
 
+    public virtual DbSet<InvoiceDetail> InvoiceDetails { get; set; }
+
     public virtual DbSet<Product> Products { get; set; }
 
     public virtual DbSet<Tenant> Tenants { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json")
-                .Build();
-
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-        }
-    }
-
+        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -85,6 +76,17 @@ public partial class Group06Context : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.Invoices).HasConstraintName("FK__Invoice__product__59FA5E80");
 
             entity.HasOne(d => d.Tenant).WithMany(p => p.Invoices).HasConstraintName("FK__Invoice__tenant___59063A47");
+        });
+
+        modelBuilder.Entity<InvoiceDetail>(entity =>
+        {
+            entity.HasKey(e => e.DetailId).HasName("PK__InvoiceD__38E9A224305D2688");
+
+            entity.Property(e => e.DetailId).ValueGeneratedNever();
+
+            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceDetails).HasConstraintName("FK__InvoiceDe__invoi__60A75C0F");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.InvoiceDetails).HasConstraintName("FK__InvoiceDe__produ__619B8048");
         });
 
         modelBuilder.Entity<Product>(entity =>

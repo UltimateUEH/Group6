@@ -204,6 +204,38 @@ namespace Group6_WebApi.Migrations
                     b.ToTable("Invoice");
                 });
 
+            modelBuilder.Entity("Group6_WebApi.Models.InvoiceDetail", b =>
+                {
+                    b.Property<int>("DetailId")
+                        .HasColumnType("int")
+                        .HasColumnName("detail_id");
+
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("int")
+                        .HasColumnName("invoice_id");
+
+                    b.Property<decimal?>("Price")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("price");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("product_id");
+
+                    b.Property<int?>("Quantity")
+                        .HasColumnType("int")
+                        .HasColumnName("quantity");
+
+                    b.HasKey("DetailId")
+                        .HasName("PK__InvoiceD__38E9A224305D2688");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("InvoiceDetail");
+                });
+
             modelBuilder.Entity("Group6_WebApi.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -320,6 +352,23 @@ namespace Group6_WebApi.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("Group6_WebApi.Models.InvoiceDetail", b =>
+                {
+                    b.HasOne("Group6_WebApi.Models.Invoice", "Invoice")
+                        .WithMany("InvoiceDetails")
+                        .HasForeignKey("InvoiceId")
+                        .HasConstraintName("FK__InvoiceDe__invoi__60A75C0F");
+
+                    b.HasOne("Group6_WebApi.Models.Product", "Product")
+                        .WithMany("InvoiceDetails")
+                        .HasForeignKey("ProductId")
+                        .HasConstraintName("FK__InvoiceDe__produ__619B8048");
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Group6_WebApi.Models.Product", b =>
                 {
                     b.HasOne("Group6_WebApi.Models.Tenant", "Tenant")
@@ -342,8 +391,15 @@ namespace Group6_WebApi.Migrations
                     b.Navigation("Invoices");
                 });
 
+            modelBuilder.Entity("Group6_WebApi.Models.Invoice", b =>
+                {
+                    b.Navigation("InvoiceDetails");
+                });
+
             modelBuilder.Entity("Group6_WebApi.Models.Product", b =>
                 {
+                    b.Navigation("InvoiceDetails");
+
                     b.Navigation("Invoices");
                 });
 
