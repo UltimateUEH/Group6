@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Group6_MVC.Migrations
+namespace Group6_WebApi.Migrations
 {
     /// <inheritdoc />
     public partial class v0 : Migration
@@ -154,6 +154,31 @@ namespace Group6_MVC.Migrations
                         principalColumn: "tenant_id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "InvoiceDetail",
+                columns: table => new
+                {
+                    detail_id = table.Column<int>(type: "int", nullable: false),
+                    invoice_id = table.Column<int>(type: "int", nullable: true),
+                    product_id = table.Column<int>(type: "int", nullable: true),
+                    quantity = table.Column<int>(type: "int", nullable: true),
+                    price = table.Column<decimal>(type: "decimal(10,2)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__InvoiceD__38E9A224305D2688", x => x.detail_id);
+                    table.ForeignKey(
+                        name: "FK__InvoiceDe__invoi__60A75C0F",
+                        column: x => x.invoice_id,
+                        principalTable: "Invoice",
+                        principalColumn: "invoice_id");
+                    table.ForeignKey(
+                        name: "FK__InvoiceDe__produ__619B8048",
+                        column: x => x.product_id,
+                        principalTable: "Product",
+                        principalColumn: "product_id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Account_company_id",
                 table: "Account",
@@ -195,6 +220,16 @@ namespace Group6_MVC.Migrations
                 column: "tenant_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetail_invoice_id",
+                table: "InvoiceDetail",
+                column: "invoice_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoiceDetail_product_id",
+                table: "InvoiceDetail",
+                column: "product_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Product_tenant_id",
                 table: "Product",
                 column: "tenant_id");
@@ -205,6 +240,9 @@ namespace Group6_MVC.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Account");
+
+            migrationBuilder.DropTable(
+                name: "InvoiceDetail");
 
             migrationBuilder.DropTable(
                 name: "Invoice");
