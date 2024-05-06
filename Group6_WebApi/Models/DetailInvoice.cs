@@ -35,6 +35,9 @@ public partial class DetailInvoice
     [Column("total_amount", TypeName = "decimal(10, 2)")]
     public decimal? TotalAmount { get; set; }
 
+    [Column("discount")]
+    public int? Discount { get; set; }
+
     [Column("note", TypeName = "text")]
     public string? Note { get; set; }
 
