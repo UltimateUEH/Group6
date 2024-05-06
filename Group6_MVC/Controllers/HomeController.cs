@@ -1,5 +1,6 @@
+﻿using Microsoft.AspNetCore.Mvc;
 using Group6_MVC.Models;
-using Microsoft.AspNetCore.Mvc;
+using Group6_WebApi.Models;
 using System.Diagnostics;
 
 namespace Group6_MVC.Controllers
@@ -7,16 +8,38 @@ namespace Group6_MVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly HttpClient _httpClient;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, HttpClient httpClient)
         {
             _logger = logger;
+            _httpClient = httpClient;
             // check new u see
         }
 
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+
+        public async Task<IActionResult> Index()
         {
-            return View();
+            // Thiết lập BaseAddress
+            _httpClient.BaseAddress = new Uri("https://localhost:7115/api/"); // change thanh cai port cua moi nguoi
+
+            // Gửi yêu cầu với URI tương đối
+            var response = await _httpClient.GetAsync("Invoice");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var invoices = await response.Content.ReadFromJsonAsync<List<Invoice>>();
+
+                return View(invoices);
+            }
+            else
+            {
+                return View(new List<Invoice>());
+            }
         }
 
         public IActionResult Privacy()

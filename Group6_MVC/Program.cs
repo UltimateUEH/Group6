@@ -7,6 +7,12 @@ namespace Group6_MVC
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            // Add framework services.
+            builder.Services.AddMvc();
+
+            // Add HttpClient
+            builder.Services.AddHttpClient();
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
             
