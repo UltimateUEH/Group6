@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace Group6_WebApi.Models;
+namespace Group6_MVC.Models;
 
 [Table("Account")]
 public partial class Account

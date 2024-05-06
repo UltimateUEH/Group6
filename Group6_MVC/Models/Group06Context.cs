@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Group6_WebApi.Models;
+namespace Group6_MVC.Models;
 
 public partial class Group06Context : DbContext
 {
@@ -39,7 +39,6 @@ public partial class Group06Context : DbContext
             optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         }
     }
-
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

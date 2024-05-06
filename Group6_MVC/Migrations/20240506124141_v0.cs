@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Group6_WebApi.Migrations
+namespace Group6_MVC.Migrations
 {
     /// <inheritdoc />
     public partial class v0 : Migration
@@ -12,30 +12,15 @@ namespace Group6_WebApi.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Tax",
-                columns: table => new
-                {
-                    tax_id = table.Column<int>(type: "int", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    rate = table.Column<decimal>(type: "decimal(5,2)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__Tax__129B8670C0BA286F", x => x.tax_id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Tenant",
                 columns: table => new
                 {
                     tenant_id = table.Column<int>(type: "int", nullable: false),
-                    name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    contact_info = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    tenant_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Tenant__D6F29F3E1CBCA3CD", x => x.tenant_id);
+                    table.PrimaryKey("PK__Tenant__D6F29F3E743A1727", x => x.tenant_id);
                 });
 
             migrationBuilder.CreateTable(
@@ -44,34 +29,15 @@ namespace Group6_WebApi.Migrations
                 {
                     company_id = table.Column<int>(type: "int", nullable: false),
                     tenant_id = table.Column<int>(type: "int", nullable: true),
-                    name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    contact_info = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    company_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    company_email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    company_address = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Company__3E26723594932133", x => x.company_id);
+                    table.PrimaryKey("PK__Company__3E2672358DB7E6E0", x => x.company_id);
                     table.ForeignKey(
                         name: "FK__Company__tenant___4BAC3F29",
-                        column: x => x.tenant_id,
-                        principalTable: "Tenant",
-                        principalColumn: "tenant_id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Invoice",
-                columns: table => new
-                {
-                    invoice_id = table.Column<int>(type: "int", nullable: false),
-                    tenant_id = table.Column<int>(type: "int", nullable: true),
-                    invoice_date = table.Column<DateTime>(type: "datetime", nullable: true),
-                    total_amount = table.Column<decimal>(type: "decimal(10,2)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__Invoice__F58DFD49129FC0A3", x => x.invoice_id);
-                    table.ForeignKey(
-                        name: "FK__Invoice__tenant___5535A963",
                         column: x => x.tenant_id,
                         principalTable: "Tenant",
                         principalColumn: "tenant_id");
@@ -83,13 +49,13 @@ namespace Group6_WebApi.Migrations
                 {
                     product_id = table.Column<int>(type: "int", nullable: false),
                     tenant_id = table.Column<int>(type: "int", nullable: true),
-                    name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    product_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     price = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
-                    description = table.Column<string>(type: "text", nullable: true)
+                    product_description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Product__47027DF5F3E7F9EC", x => x.product_id);
+                    table.PrimaryKey("PK__Product__47027DF58055AEFD", x => x.product_id);
                     table.ForeignKey(
                         name: "FK__Product__tenant___52593CB8",
                         column: x => x.tenant_id,
@@ -105,12 +71,12 @@ namespace Group6_WebApi.Migrations
                     tenant_id = table.Column<int>(type: "int", nullable: true),
                     company_id = table.Column<int>(type: "int", nullable: true),
                     username = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Account__46A222CD442DB334", x => x.account_id);
+                    table.PrimaryKey("PK__Account__46A222CD3F76C11B", x => x.account_id);
                     table.ForeignKey(
                         name: "FK__Account__company__4F7CD00D",
                         column: x => x.company_id,
@@ -124,37 +90,68 @@ namespace Group6_WebApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Detail_Invoice",
+                name: "Customer",
                 columns: table => new
                 {
-                    detail_id = table.Column<int>(type: "int", nullable: false),
+                    customer_id = table.Column<int>(type: "int", nullable: false),
+                    customer_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     invoice_id = table.Column<int>(type: "int", nullable: true),
+                    company_id = table.Column<int>(type: "int", nullable: true),
+                    tenant_id = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Customer__CD65CB85FBCB887D", x => x.customer_id);
+                    table.ForeignKey(
+                        name: "FK__Customer__compan__5535A963",
+                        column: x => x.company_id,
+                        principalTable: "Company",
+                        principalColumn: "company_id");
+                    table.ForeignKey(
+                        name: "FK__Customer__tenant__5629CD9C",
+                        column: x => x.tenant_id,
+                        principalTable: "Tenant",
+                        principalColumn: "tenant_id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Invoice",
+                columns: table => new
+                {
+                    invoice_id = table.Column<int>(type: "int", nullable: false),
+                    tenant_id = table.Column<int>(type: "int", nullable: true),
                     product_id = table.Column<int>(type: "int", nullable: true),
-                    name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    customer_id = table.Column<int>(type: "int", nullable: true),
+                    invoice_date = table.Column<DateTime>(type: "datetime", nullable: true),
+                    status = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    total_amount = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
+                    product_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     quantity = table.Column<int>(type: "int", nullable: true),
                     price = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
-                    tax_id = table.Column<int>(type: "int", nullable: true),
-                    total_amount = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
+                    customer_name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    discount = table.Column<int>(type: "int", nullable: true),
+                    tax_rate = table.Column<int>(type: "int", nullable: true),
+                    detail_id = table.Column<int>(type: "int", nullable: true),
                     note = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Detail_I__38E9A22406349550", x => x.detail_id);
+                    table.PrimaryKey("PK__Invoice__F58DFD490AFB7D4B", x => x.invoice_id);
                     table.ForeignKey(
-                        name: "FK__Detail_In__invoi__59FA5E80",
-                        column: x => x.invoice_id,
-                        principalTable: "Invoice",
-                        principalColumn: "invoice_id");
+                        name: "FK__Invoice__custome__5AEE82B9",
+                        column: x => x.customer_id,
+                        principalTable: "Customer",
+                        principalColumn: "customer_id");
                     table.ForeignKey(
-                        name: "FK__Detail_In__produ__5AEE82B9",
+                        name: "FK__Invoice__product__59FA5E80",
                         column: x => x.product_id,
                         principalTable: "Product",
                         principalColumn: "product_id");
                     table.ForeignKey(
-                        name: "FK__Detail_In__tax_i__5BE2A6F2",
-                        column: x => x.tax_id,
-                        principalTable: "Tax",
-                        principalColumn: "tax_id");
+                        name: "FK__Invoice__tenant___59063A47",
+                        column: x => x.tenant_id,
+                        principalTable: "Tenant",
+                        principalColumn: "tenant_id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -173,19 +170,24 @@ namespace Group6_WebApi.Migrations
                 column: "tenant_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Detail_Invoice_invoice_id",
-                table: "Detail_Invoice",
-                column: "invoice_id");
+                name: "IX_Customer_company_id",
+                table: "Customer",
+                column: "company_id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Detail_Invoice_product_id",
-                table: "Detail_Invoice",
+                name: "IX_Customer_tenant_id",
+                table: "Customer",
+                column: "tenant_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoice_customer_id",
+                table: "Invoice",
+                column: "customer_id");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Invoice_product_id",
+                table: "Invoice",
                 column: "product_id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Detail_Invoice_tax_id",
-                table: "Detail_Invoice",
-                column: "tax_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoice_tenant_id",
@@ -205,19 +207,16 @@ namespace Group6_WebApi.Migrations
                 name: "Account");
 
             migrationBuilder.DropTable(
-                name: "Detail_Invoice");
-
-            migrationBuilder.DropTable(
-                name: "Company");
-
-            migrationBuilder.DropTable(
                 name: "Invoice");
+
+            migrationBuilder.DropTable(
+                name: "Customer");
 
             migrationBuilder.DropTable(
                 name: "Product");
 
             migrationBuilder.DropTable(
-                name: "Tax");
+                name: "Company");
 
             migrationBuilder.DropTable(
                 name: "Tenant");
