@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Logout With JS</title>
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/fontawesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <span class="loader"></span>
+
+    <div class="loading"></div>
+
+    <div class="body-overlay"></div>
+
+
+
+    <div class="main-page">
+        <div class="header-area">
+            <div class="header-top">
+                <div class="logo">
+                    <span class="dynamic-logo">Rubayat : Rifat</span>
+                </div>
+                <div class="header-top-icons">
+                    <div class="notification">
+                        <div class="notification-icon">
+                            <span class="notification-count">2</span>
+                            <i class="fa-solid fa-bell"></i>
+                        </div>
+                        <div class="notification-body">
+                            <div class="close-btn notification-close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+                            <h4>🔔 Notifications</h4>
+                            <ul>
+                                <li>New Login in your account</li>
+                                <li>Your account is successfully created</li>
+                                <li>If you forgot your password please add a verify id in it</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <img class="user-icon" src="img/user.jpg">
+                        <div class="user-actions">
+                            <div class="close-btn user-menu-close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </div>
+                            <div class="user-menu-info">
+                                <span class="user-menu-name">Rubayat Rifat</span>
+                                <span class="user-menu-id">User ID: 20343</span>
+                            </div>
+                            <ul>
+                                <li>
+                                    <i class="fa-solid fa-gauge"></i>
+                                    <span>Dashboard</span>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-camera"></i>
+                                    <span>Change Profile Pic</span>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-user-pen"></i>
+                                    <span>Change Information</span>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-lock"></i>
+                                    <span>Update Password</span>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <span>Add Account</span>
+                                </li>
+                                <li>
+                                    <i class="fa-solid fa-user-minus"></i>
+                                    <span>Delet Account</span>
+                                </li>
+                                <li class="logout-option">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                    <span>Log Out</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ul class="main-menu">
+                <li title="Home" class="active"><i class="fa-solid fa-house"></i></li>
+                <li title="Play Game"><i class="fa-solid fa-gamepad"></i></li>
+                <li title="Watch"><i class="fa-solid fa-tv"></i></li>
+                <li title="About Me"><i class="fa-solid fa-address-card"></i></li>
+            </ul>
+        </div>
+
+        <div class="body-area">
+            <h2 class="linear-wipe">Hey <span class="name-of-user"> Rubayat</span> 👋, Do you know? This site is compleately made wih HTML, CSS and JavaScript ❤️</h2>
+            <div class="socials">
+                <a href="https://github.com/rubayatrifat" target="_blank">
+                    <i class="fa-brands fa-github"></i>
+                </a>
+                <a href="https://www.facebook.com/mdrubayatislam17" target="_blank">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/rubayat-rifat-64260b277/" target="_blank">
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Area -->
+
+    <form action="#" class="login">
+        <h2>Login Now</h2>
+        <input type="text" id="user-id" placeholder="Your User ID" class="input-field">
+        <div class="password-input">
+            <input type="password" id="user-password" placeholder="Your Password" class="input-field show-hide-pass">
+            <i class="fa-regular fa-eye" id="show-pass"></i>
+            <i class="fa-regular fa-eye-slash" id="hide-pass"></i>
+        </div>
+        <input type="submit" value="Login" id="user-login" class="login-btn">
+        <p>Don't have an acount? No problem <span id="create-account">create an account</span> now.</p>
+    </form>
+
+    <!-- =========== Dahsboard Area Start Here ============== -->
+    <!-- =========== Dahsboard Area End Here ============== -->
+
+    <!-- Sign Up -->
+
+    <div class="scound-body">
+        <form action="#" class="sign-up">
+            <h2>Sign Up</h2>
+            <div class="first-last-name">
+                <input type="text" placeholder="First Name" class="input-field" id="first-name">
+                <input type="text" placeholder="Last Name" class="input-field" id="last-name">
+            </div>
+            <div class="password-input">
+                <input type="password" placeholder="Choose a Password" class="input-field show-hide-pass" id="password-input">
+                <i class="fa-regular fa-eye" id="show-pass"></i>
+                <i class="fa-regular fa-eye-slash" id="hide-pass"></i>
+            </div>
+            <div class="sign-up-btns">
+                <input type="submit" value="Create Account" class="sign-up-btn" id="sign-up-btn" style="background: #1dad00; border-color: #1dad00">
+                <input type="submit" value="Back to Login" id="back-login" class="sign-up-btn">
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="main.js"></script>
+</body>
+</html>
