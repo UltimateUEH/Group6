@@ -39,22 +39,6 @@ namespace Group6_WebApi.Controllers
             }
         }
 
-        //[HttpPost]
-        //public IActionResult Create(Invoice invoice)
-        //{
-        //    try
-        //    {
-        //        _context.Invoices.Add(invoice);
-        //        _context.SaveChanges();
-
-        //        return Ok(invoice);
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
-
         [HttpPost]
         public IActionResult Create(Invoice invoice)
         {
@@ -117,27 +101,6 @@ namespace Group6_WebApi.Controllers
                 return customer.CustomerId;
             }
         }
-
-        //[HttpPut("{id}")]
-        //public IActionResult Update(int id, Invoice invoice)
-        //{
-        //    var existingInvoice = _context.Invoices.SingleOrDefault(i =>
-        //                   i.InvoiceId == id);
-
-        //    if (existingInvoice != null)
-        //    {
-        //        existingInvoice.InvoiceDate = invoice.InvoiceDate;
-        //        existingInvoice.TotalAmount = invoice.TotalAmount;
-
-        //        _context.SaveChanges();
-
-        //        return Ok(existingInvoice);
-        //    }
-        //    else
-        //    {
-        //        return NotFound();
-        //    }
-        //}
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, Invoice invoice)
