@@ -1,0 +1,596 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #282828;
+    overflow: hidden;
+}
+
+
+/* Main page loading */
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    display: none;
+}
+
+.loader.show {
+    display: block;
+}
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+    } 
+
+/* ============== Next Page Loading ============= */
+
+.loading {
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 12;
+    position: fixed;
+    --gradient-lavender: #d300c5;
+    --gradient-orange: #ff7a00;
+    --gradient-pink: #ff0169;
+    --gradient-purple: #7638fa;
+    --gradient-yellow: #ffd600;
+    opacity: 0;
+    transition: .4s;
+    z-index: 9999;
+  }
+
+  .loading.show {
+    opacity: 1;
+  }
+  
+  .loading {
+    animation: 2s linear infinite RefreshedLoadingBarProgress,
+      0.5s ease-out LoadingBarEnter;
+    background: linear-gradient(
+      to right,
+      var(--gradient-yellow),
+      var(--gradient-orange),
+      var(--gradient-pink),
+      var(--gradient-lavender),
+      var(--gradient-purple),
+      var(--gradient-yellow)
+    );
+    background-size: 500%;
+    height: 3px;
+    transform-origin: left;
+    width: 100%;
+  }
+  @keyframes RefreshedLoadingBarProgress {
+    0% {
+      background-position: 125% 0;
+    }
+    100% {
+      background-position: 0% 0;
+    }
+  }
+  @keyframes LoadingBarEnter {
+    0% {
+      transform: scaleX(0);
+    }
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  
+/* Loading  Overlay */
+
+.body-overlay {
+    display: none;
+}
+
+.body-overlay.show {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 999;
+    position: absolute;
+    opacity: 0.5;
+}
+
+/* =========== Login Syle Here =========== */
+
+.login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #383838;
+    padding: 30px 50px;
+    border-radius: 7px;
+    box-shadow: rgba(41, 255, 18) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.login h2 {
+    color: #dfdfdf;
+    font-family: candara;
+    margin-bottom: 30px;
+    font-size: 27px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+.login input {
+    display: block;
+    padding: 11px 18px;
+    font-family: tahoma;
+    margin-top: 10px;
+    background: #282828;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    width: 180px;
+}
+
+.login .input-field:focus {
+    outline: none;
+    box-shadow: rgb(156 250 255 / 70%) 0px 2px 4px 0px, rgb(156 250 255 / 30%) 0px 2px 16px 0px;
+}
+
+.login .input-field::placeholder {
+    font-family: candara;
+    color: #7c7c7c;
+}
+
+.login .login-btn {
+    background: #FF5B5B;
+    width: 69px;
+    margin: auto;
+    margin-top: 22px;
+    padding: 8px 0px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: .3s;
+    letter-spacing: .7px;
+}
+
+.login .login-btn:hover {
+    background-color: transparent;
+    border-color: #FF5B5B;
+}
+
+.login .login-btn:active {
+    transform: scale(.90);
+}
+
+.login p {
+    text-align: center;
+    width: 221px;
+    margin-top: 30px;
+    font-family: candara;
+    color: #7c7c7c;
+    font-size: 14px;
+    line-height: 18px;
+    word-spacing: 2px;
+}
+
+.login p span {
+    color: #afafaf;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* =========== Main Page =========== */
+
+.main-page {
+    display: none;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    z-index: 10;
+    position: relative;
+    background-color: #0d1117;
+}
+
+.main-page.display {
+    display: block;
+}
+
+.main-page .header-top {
+    background: #010409;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7px 80px;
+    border-bottom: 2px solid #4e3d95;
+    border-radius: 0 0 15px 15px;
+}
+
+.header-top .logo span {
+    color: #fff;
+    font-family: Ink Free;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.header-top-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-icon {
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-body {
+    position: absolute;
+    color: #fff;
+    top: 100px;
+    right: 8px;
+    background: #4242428f;
+    font-family: tahoma;
+    padding: 33px 34px 15px 50px;
+    border-radius: 11px;
+    backdrop-filter: blur(2px);
+    transition: .4s;
+    width: 280px;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.notification-body.show-notifications {
+    opacity: 1;
+    visibility: visible;
+    top: 61px;
+}
+
+.notification-body h4 {
+    text-align: center;
+    font-family: cursive;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 4px double #4E3D95;
+    padding-bottom: 13px;
+}
+
+.notification-body ul li {
+    list-style: none;
+    font-size: 15px;
+    margin-bottom: 2px;
+    color: #999;
+    cursor: pointer;
+    background: transparent;
+    padding: 10px 0px 10px 22px;
+    border-radius: 5px;
+    line-height: 24px;
+    transition: .2s;
+}
+
+.notification-body ul li:hover {
+    background: #3e3e3e;
+}
+
+
+.notification-icon span {
+    position: absolute;
+    background-color: red;
+    width: 17px;
+    height: 17px;
+    border-radius: 60%;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    font-family: tahoma;
+    line-height: 13px;
+    top: -7px;
+    right: 17px;
+}
+
+.header-top-icons .notification-icon i {
+    color: #fff;
+    font-size: 22px;
+    margin-right: 23px;
+}
+
+.main-page .header-area .user-info img {
+    width: 45px;
+    border-radius: 50%;
+    border: 1px solid #464646;
+    cursor: pointer;
+}
+
+.main-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #4e3d95;
+    width: 37%;
+    margin: auto;
+    padding: 13px 0;
+    border-radius: 0 0 20px 20px;
+}
+
+.main-menu li {
+    list-style: none;
+    color: #cdbefb;
+    margin: 0 33px;
+    font-size: 21px;
+    cursor: pointer;
+    transition: .3s;
+    padding: 0px 5px 4px 5px;
+    border-radius: 4px;
+}
+
+.main-menu li:hover {
+    color: #fff;
+}
+
+.main-menu li.active {
+    color: #fff;
+    border-bottom: 3px solid #fff;
+}
+
+.body-area h2 {
+    text-align: center;
+    font-family: candara;
+    font-weight: 700;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    font-size: 35px;
+    position: absolute;
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 648px;
+}
+
+.linear-wipe {
+    text-align: center;
+    background: linear-gradient(90deg,  #ff33ee, #08ddff, #29FD61, #fffc30, #fc56ee);
+    background-size: 200% auto;
+    color: #000;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+
+
+.body-area h2 span {
+    font-size: 40px;
+    font-family: impact;
+    font-weight: 400;
+}
+
+.socials {
+    position: absolute;
+    bottom: 56px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.socials a {
+    text-decoration: none;
+    color: #303030;
+    font-size: 30px;
+    margin: 0px 12px;
+}
+
+.user-actions {
+    position: absolute;
+    color: #fff;
+    top: 100px;
+    right: 8px;
+    background: #4242428f;
+    font-family: tahoma;
+    padding: 33px 49px 15px 50px;
+    border-radius: 11px;
+    backdrop-filter: blur(2px);
+    opacity: 0;
+    visibility: hidden;
+    transition: .4s;
+} 
+
+.user-actions.show-user-menu {
+    opacity: 1;
+    visibility: visible;
+    top: 61px;
+}
+
+.close-btn {
+    font-size: 14px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #404040c2;
+    width: 35px;
+    text-align: center;
+    height: 35px;
+    border-radius: 0 8px 0 13px;
+    line-height: 33px;
+    cursor: pointer;
+}
+
+.user-menu-info {
+    margin-bottom: 20px;
+    border-bottom: 3px double #6a6a6a;
+    padding-bottom: 6px;
+}
+
+.user-actions .user-menu-info span {
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.user-menu-info .user-menu-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #4b7fb7;
+    margin-bottom: 13px ;
+}
+
+.user-menu-info .user-menu-id {
+    color: #a7a7a7;
+    font-size: 15px;
+}
+
+.user-actions ul li {
+    list-style: none;
+    font-size: 15px;
+    letter-spacing: 0.4px;
+    margin-bottom: 23px;
+    margin-left: 18px;
+    color: #bdbdbd;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.user-actions ul li:hover {
+    color: #fff;
+}
+
+.user-actions ul li:hover i {
+    color: #fff;
+}
+
+.user-actions ul li i {
+    margin-right: 6px;
+    color: #636883;
+    transition: .2s;
+}
+
+/* =========== Main Page end =========== */
+
+/* Password Input */
+
+.password-input {
+    position: relative;
+}
+
+.password-input i {
+    top: 13px;
+    position: absolute;
+    right: 11px;
+    color: #7c7c7c;
+    font-size: 14px;
+    background: #282828;
+    padding: 0 7px;
+    cursor: pointer;
+    width: 17px;
+    text-align: center;
+}
+
+.password-input #hide-pass {
+    display: none;
+}
+
+/* ============= Sing Up Style Here =========== */
+
+.scound-body {
+    display: none;
+}
+
+.scound-body.show {
+    background-color: #282828;
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    position: relative;
+}
+
+.scound-body .sign-up {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #383838;
+    padding: 30px 50px;
+    border-radius: 7px;
+    box-shadow: rgb(255 65 65) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.sign-up h2 {
+    color: #dfdfdf;
+    font-family: candara;
+    margin-bottom: 30px;
+    font-size: 27px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.sign-up input {
+    display: block;
+    padding: 11px 18px;
+    font-family: tahoma;
+    margin-top: 10px;
+    background: #282828;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    width: 228px;
+}
+
+.sign-up .input-field:focus {
+    outline: none;
+    box-shadow: rgba(41, 255, 18) 0px 2px 4px 0px, rgb(156 250 255 / 30%) 0px 2px 16px 0px;
+}
+
+.sign-up .input-field::placeholder {
+    font-family: candara;
+    color: #7c7c7c;
+}
+
+.sign-up-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sign-up .sign-up-btn {
+    background: #FF5B5B;
+    width: 122px;
+    margin: auto;
+    margin-top: 22px;
+    padding: 10px 0px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: .3s;
+    letter-spacing: .7px;
+}
+
+.sign-up .sign-up-btn:hover {
+    background: transparent !important;
+    border-color: #FF5B5B;
+}
+
+.sign-up .sign-up-btn:active {
+    transform: scale(.98);
+}
