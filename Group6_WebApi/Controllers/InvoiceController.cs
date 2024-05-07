@@ -58,6 +58,15 @@ namespace Group6_WebApi.Controllers
                     invoice.CustomerId = customerId;
                     invoice.CustomerName = invoice.Customer.CustomerName;
                 }
+                else
+                {
+                    // Tạo một đối tượng khách hàng mới nếu không có thông tin khách hàng được cung cấp
+                    Customer newCustomer = new Customer();
+
+                    int customerId = SaveCustomerAndGetId(newCustomer);
+                    invoice.CustomerId = customerId;
+                    invoice.CustomerName = newCustomer.CustomerName;
+                }
 
                 // Tính tổng tiền
                 decimal? totalPrice = invoiceDetails.Sum(detail => detail.Quantity * detail.Price);
@@ -125,6 +134,15 @@ namespace Group6_WebApi.Controllers
                         // Gán customer_id cho invoice
                         invoice.CustomerId = customerId;
                         invoice.CustomerName = invoice.Customer.CustomerName;
+                    }
+                    else
+                    {
+                        // Tạo một đối tượng khách hàng mới nếu không có thông tin khách hàng được cung cấp
+                        Customer newCustomer = new Customer();
+
+                        int customerId = SaveCustomerAndGetId(newCustomer);
+                        invoice.CustomerId = customerId;
+                        invoice.CustomerName = newCustomer.CustomerName;
                     }
 
                     // Tính tổng tiền

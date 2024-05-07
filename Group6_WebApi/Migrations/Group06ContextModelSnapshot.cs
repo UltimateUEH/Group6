@@ -58,7 +58,7 @@ namespace Group6_WebApi.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Account");
+                    b.ToTable("Account", (string)null);
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.Company", b =>
@@ -91,7 +91,7 @@ namespace Group6_WebApi.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Company");
+                    b.ToTable("Company", (string)null);
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.Customer", b =>
@@ -124,7 +124,7 @@ namespace Group6_WebApi.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Customer");
+                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.Invoice", b =>
@@ -178,7 +178,7 @@ namespace Group6_WebApi.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Invoice");
+                    b.ToTable("Invoice", (string)null);
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.InvoiceDetail", b =>
@@ -214,7 +214,7 @@ namespace Group6_WebApi.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("InvoiceDetail");
+                    b.ToTable("InvoiceDetail", (string)null);
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.Product", b =>
@@ -245,7 +245,7 @@ namespace Group6_WebApi.Migrations
 
                     b.HasIndex("TenantId");
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.Tenant", b =>
@@ -262,7 +262,7 @@ namespace Group6_WebApi.Migrations
                     b.HasKey("TenantId")
                         .HasName("PK__Tenant__D6F29F3ED8C023AE");
 
-                    b.ToTable("Tenant");
+                    b.ToTable("Tenant", (string)null);
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.Account", b =>

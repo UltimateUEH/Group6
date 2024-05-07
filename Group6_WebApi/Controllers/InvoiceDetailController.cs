@@ -87,7 +87,6 @@ namespace Group6_WebApi.Controllers
             {
                 // Lưu khách hàng mới vào cơ sở dữ liệu và trả về customer_id
                 _context.Products.Add(product);
-                _context.SaveChanges();
                 return product.ProductId;
             }
         }
@@ -142,10 +141,17 @@ namespace Group6_WebApi.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var query = $"DELETE FROM InvoiceDetail WHERE invoice_id = {id}";
-            _context.Database.ExecuteSqlRaw(query);
+            try
+            {
+                var query = $"DELETE FROM InvoiceDetail WHERE invoice_id = {id}";
+                _context.Database.ExecuteSqlRaw(query);
 
-            return Ok();
+                return Ok();
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }
