@@ -106,7 +106,7 @@ namespace Group6_WebApi.Controllers
             {
                 // Lưu khách hàng mới vào cơ sở dữ liệu và trả về customer_id
                 _context.Customers.Add(customer);
-                _context.SaveChanges();
+
                 return customer.CustomerId;
             }
         }
