@@ -179,7 +179,7 @@ namespace Group6_WebApi.Controllers
 
                     // Cập nhật các thông tin khác của hóa đơn
                     existingInvoice.InvoiceDate = invoice.InvoiceDate;
-                    existingInvoice.Status = invoice.Status;
+                    existingInvoice.InvoiceStatus = invoice.InvoiceStatus;
                     existingInvoice.CustomerId = invoice.CustomerId;
                     existingInvoice.CustomerName = invoice.CustomerName;
 
