@@ -53,8 +53,6 @@ th {
 .search-container {
     display: flex;
     align-items: center;
-    background-color: #fff;
-    border-radius: 20px;
 }
 
 .search-container input[type="text"] {
@@ -67,8 +65,9 @@ th {
     margin-top: 20px;
     text-align: center;
     background-color: #fff;
-    padding: 20px;
+    padding: 10px;
     border-radius: 10px;
+    border: 1px solid #ccc;
 }
 
 .cart {
@@ -93,9 +92,35 @@ th {
     padding: 20px;
     border-radius: 10px;
 }
-
 .logout-home {
-    position: fixed;
+    position: Absolute;
     top: 30px;
     right: 150px;
+}
+
+.customer{
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    padding: 10px;
+
+}
+
+#paymentTable{
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    padding: 10px;
+
+}
+
+.transiction{
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    padding: 10px;
+
 }

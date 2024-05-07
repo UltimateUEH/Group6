@@ -15,7 +15,7 @@
     <header>
         <h1>Group 6</h1>
         <div class="logout-home">
-            <button onclick="logout()" style="background-color: #E68484;"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+            <button onclick="logout()" style="background-color: #E68484; "><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
         </div>
     </header>
     <main>
@@ -28,7 +28,11 @@
         <div class="quick-key">
             <h2>Quick key</h2>
             <!-- Hiển thị các nút sản phẩm -->
-            <div id="quickKeyButtons"></div>
+            <div id="quickKeyButtons" >
+                <button onclick="resetQuickKey()" style="background-color: #89AAE6; color: #fff; float:right;">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
         </div>
         <br>
         <div    div class="cart">
@@ -37,7 +41,14 @@
     <button onclick="addToPayment()" style="background-color: #89AAE6;">Thêm vào thanh toán</button>
         </div>
         <br>
-        <div>
+    <div class="customer">
+        <h2>Khách Hàng</h2>
+        <select id="customerSelect" style="border-radius: 10px;, background-color: fade;border: none; margin-top: 20px"></select>
+        <input type="text" id="customerName" placeholder="Nhập tên khách hàng" style="border-radius: 10px;" >
+        <button onclick="addCustomer()"style="background-color: #89AAE6;">Thêm Khách Hàng</button>
+        <ul id="customerList"></ul>
+    </div>
+        <div class="transiction">
             <h2>Màn hình thanh toán</h2>
             <table id="paymentTable">
                 <thead>
@@ -51,6 +62,12 @@
                 <tbody id="paymentItems">
                     <!-- Các dòng sản phẩm và thông tin thanh toán sẽ được thêm bằng JavaScript -->
                 </tbody>
+                <tfoot>
+            <tr>
+                <td colspan="3" style="text-align: right;">Tổng:</td>
+                <td id="totalAmount">0.00</td>
+            </tr>
+        </tfoot>
             </table>
         </div>
     </main>
@@ -60,7 +77,9 @@
             { name: "Sản phẩm A", price: 100 },
             { name: "Sản phẩm B", price: 200 },
             { name: "Sản phẩm C", price: 150 },
-            { name: "Con chó C", price: 150 },
+            { name: "Con chó A", price: 120 },
+            { name: "Con chó B", price: 150 },
+            { name: "Con chó C", price: 180 },
             // Thêm sản phẩm khác nếu cần
         ];
 
@@ -106,16 +125,29 @@
             tableBody.innerHTML += totalRow;
         }
 
-        // Tạo nút cho mỗi sản phẩm trong Quick key
-        const quickKeyContainer = document.getElementById("quickKeyButtons");
-        products.forEach(product => {
-            const button = document.createElement("button");
-            button.textContent = product.name;
-            button.onclick = function() {
-                addToCart(product);
-            };
-            quickKeyContainer.appendChild(button);
-        });
+    // Lấy ra 4 sản phẩm ngẫu nhiên từ mảng products
+    const randomProducts = shuffleArray(products).slice(0, 4);
+    // Tạo nút cho từng sản phẩm trong Quick key
+    const quickKeyContainer = document.getElementById("quickKeyButtons");
+    randomProducts.forEach(product => {
+        const button = document.createElement("button");
+        button.textContent = product.name;
+        button.onclick = function() {
+            addToCart(product);
+        };
+        button.style.color = "black";
+        quickKeyContainer.appendChild(button);
+    });
+
+// Hàm đảo vị trí phần tử trong mảng ngẫu nhiên
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 
         // Hàm thêm sản phẩm vào giỏ hàng
         function addToCart(product) {
@@ -153,6 +185,55 @@
             cartItems = []; // Xóa giỏ hàng sau khi thêm vào thanh toán
             displayCart(); // Cập nhật lại giao diện giỏ hàng
         }
+
+        // Hàm xóa sản phẩm từ màn hình thanh toán
+        function removeItem(button) {
+            const row = button.parentNode.parentNode;
+            const index = Array.from(row.parentNode.children).indexOf(row);
+            row.parentNode.removeChild(row);
+            cartItems.splice(index, 1);
+            displayCart(); // Cập nhật lại giao diện giỏ hàng
+        }
+    </script>
+    <script>
+        // Mảng chứa danh sách khách hàng
+        let customers = [];
+
+        // Hàm thêm khách hàng
+        function addCustomer() {
+            const customerName = document.getElementById("customerName").value.trim();
+            if (customerName !== "") {
+                customers.push(customerName);
+                displayCustomers();
+                document.getElementById("customerName").value = ""; // Xóa input sau khi thêm
+            } else {
+                alert("Vui lòng nhập tên khách hàng!");
+            }
+        }
+// Hàm hiển thị danh sách khách hàng
+function displayCustomers() {
+    const customerList = document.getElementById("customerList");
+    customerList.innerHTML = "";
+    customers.forEach(customer => {
+        const li = document.createElement("li");
+        li.textContent = customer;
+        customerList.appendChild(li);
+    });
+}
+
+// Hàm hiển thị tên khách hàng trên màn hình thanh toán
+function displayCustomerOnPayment(customerName) {
+    const paymentTable = document.getElementById("paymentTable");
+    const tbody = paymentTable.querySelector("tbody");
+    const row = `
+        <tr>
+            <td colspan="4">Khách hàng: ${customerName}</td>
+        </tr>
+    `;
+    tbody.insertAdjacentHTML("afterbegin", row); // Chèn dòng vào đầu tbody
+}
+
+        
     </script>
 </body>
 </html>
