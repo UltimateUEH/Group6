@@ -23,13 +23,13 @@ public partial class Account
     [StringLength(255)]
     public string? Username { get; set; }
 
-    [Column("email")]
-    [StringLength(255)]
-    public string? Email { get; set; }
-
     [Column("password")]
     [StringLength(255)]
     public string? Password { get; set; }
+
+    [Column("email")]
+    [StringLength(255)]
+    public string? Email { get; set; }
 
     [ForeignKey("CompanyId")]
     [InverseProperty("Accounts")]

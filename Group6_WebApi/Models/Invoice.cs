@@ -16,14 +16,35 @@ public partial class Invoice
     [Column("tenant_id")]
     public int? TenantId { get; set; }
 
+    [Column("customer_id")]
+    public int? CustomerId { get; set; }
+
     [Column("invoice_date", TypeName = "datetime")]
     public DateTime? InvoiceDate { get; set; }
+
+    [Column("invoice_status")]
+    [StringLength(50)]
+    public string? InvoiceStatus { get; set; }
 
     [Column("total_amount", TypeName = "decimal(10, 2)")]
     public decimal? TotalAmount { get; set; }
 
-    [InverseProperty("Invoice")]
-    public virtual ICollection<DetailInvoice> DetailInvoices { get; set; } = new List<DetailInvoice>();
+    [Column("customer_name")]
+    [StringLength(255)]
+    public string? CustomerName { get; set; }
+
+    [Column("discount")]
+    public int? Discount { get; set; }
+
+    [Column("tax_rate")]
+    public int? TaxRate { get; set; }
+
+    [Column("note", TypeName = "text")]
+    public string? Note { get; set; }
+
+    [ForeignKey("CustomerId")]
+    [InverseProperty("Invoices")]
+    public virtual Customer? Customer { get; set; }
 
     [ForeignKey("TenantId")]
     [InverseProperty("Invoices")]

@@ -6,22 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Group6_WebApi.Models;
 
-[Table("Detail_Invoice")]
-public partial class DetailInvoice
+[Keyless]
+[Table("InvoiceDetail")]
+public partial class InvoiceDetail
 {
-    [Key]
-    [Column("detail_id")]
-    public int DetailId { get; set; }
-
     [Column("invoice_id")]
     public int? InvoiceId { get; set; }
+
+    [Column("tenant_id")]
+    public int? TenantId { get; set; }
 
     [Column("product_id")]
     public int? ProductId { get; set; }
 
-    [Column("name")]
+    [Column("product_name")]
     [StringLength(255)]
-    public string? Name { get; set; }
+    public string? ProductName { get; set; }
 
     [Column("quantity")]
     public int? Quantity { get; set; }
@@ -29,27 +29,12 @@ public partial class DetailInvoice
     [Column("price", TypeName = "decimal(10, 2)")]
     public decimal? Price { get; set; }
 
-    [Column("tax_id")]
-    public int? TaxId { get; set; }
-
-    [Column("total_amount", TypeName = "decimal(10, 2)")]
-    public decimal? TotalAmount { get; set; }
-
-    [Column("discount")]
-    public int? Discount { get; set; }
-
-    [Column("note", TypeName = "text")]
-    public string? Note { get; set; }
-
     [ForeignKey("InvoiceId")]
-    [InverseProperty("DetailInvoices")]
     public virtual Invoice? Invoice { get; set; }
 
     [ForeignKey("ProductId")]
-    [InverseProperty("DetailInvoices")]
     public virtual Product? Product { get; set; }
 
-    [ForeignKey("TaxId")]
-    [InverseProperty("DetailInvoices")]
-    public virtual Tax? Tax { get; set; }
+    [ForeignKey("TenantId")]
+    public virtual Tenant? Tenant { get; set; }
 }

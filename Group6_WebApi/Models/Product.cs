@@ -16,18 +16,15 @@ public partial class Product
     [Column("tenant_id")]
     public int? TenantId { get; set; }
 
-    [Column("name")]
+    [Column("product_name")]
     [StringLength(255)]
-    public string? Name { get; set; }
+    public string? ProductName { get; set; }
 
     [Column("price", TypeName = "decimal(10, 2)")]
     public decimal? Price { get; set; }
 
-    [Column("description", TypeName = "text")]
-    public string? Description { get; set; }
-
-    [InverseProperty("Product")]
-    public virtual ICollection<DetailInvoice> DetailInvoices { get; set; } = new List<DetailInvoice>();
+    [Column("product_description", TypeName = "text")]
+    public string? ProductDescription { get; set; }
 
     [ForeignKey("TenantId")]
     [InverseProperty("Products")]
