@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Group6_WebApi.Migrations
 {
     [DbContext(typeof(Group06Context))]
-    [Migration("20240506132248_v0")]
+    [Migration("20240507021018_v0")]
     partial class v0
     {
         /// <inheritdoc />
@@ -55,7 +55,7 @@ namespace Group6_WebApi.Migrations
                         .HasColumnName("username");
 
                     b.HasKey("AccountId")
-                        .HasName("PK__Account__46A222CD3F76C11B");
+                        .HasName("PK__Account__46A222CD2E1EBC0B");
 
                     b.HasIndex("CompanyId");
 
@@ -90,7 +90,7 @@ namespace Group6_WebApi.Migrations
                         .HasColumnName("tenant_id");
 
                     b.HasKey("CompanyId")
-                        .HasName("PK__Company__3E2672358DB7E6E0");
+                        .HasName("PK__Company__3E267235A2A39D77");
 
                     b.HasIndex("TenantId");
 
@@ -121,7 +121,7 @@ namespace Group6_WebApi.Migrations
                         .HasColumnName("tenant_id");
 
                     b.HasKey("CustomerId")
-                        .HasName("PK__Customer__CD65CB85FBCB887D");
+                        .HasName("PK__Customer__CD65CB855CBD7A85");
 
                     b.HasIndex("CompanyId");
 
@@ -145,10 +145,6 @@ namespace Group6_WebApi.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("customer_name");
 
-                    b.Property<int?>("DetailId")
-                        .HasColumnType("int")
-                        .HasColumnName("detail_id");
-
                     b.Property<int?>("Discount")
                         .HasColumnType("int")
                         .HasColumnName("discount");
@@ -157,9 +153,42 @@ namespace Group6_WebApi.Migrations
                         .HasColumnType("datetime")
                         .HasColumnName("invoice_date");
 
+                    b.Property<string>("InvoiceStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("invoice_status");
+
                     b.Property<string>("Note")
                         .HasColumnType("text")
                         .HasColumnName("note");
+
+                    b.Property<int?>("TaxRate")
+                        .HasColumnType("int")
+                        .HasColumnName("tax_rate");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int")
+                        .HasColumnName("tenant_id");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(10, 2)")
+                        .HasColumnName("total_amount");
+
+                    b.HasKey("InvoiceId")
+                        .HasName("PK__Invoice__F58DFD49EBCC577A");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("Invoice");
+                });
+
+            modelBuilder.Entity("Group6_WebApi.Models.InvoiceDetail", b =>
+                {
+                    b.Property<int?>("InvoiceId")
+                        .HasColumnType("int")
+                        .HasColumnName("invoice_id");
 
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(10, 2)")
@@ -178,63 +207,15 @@ namespace Group6_WebApi.Migrations
                         .HasColumnType("int")
                         .HasColumnName("quantity");
 
-                    b.Property<string>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("status");
-
-                    b.Property<int?>("TaxRate")
-                        .HasColumnType("int")
-                        .HasColumnName("tax_rate");
-
                     b.Property<int?>("TenantId")
                         .HasColumnType("int")
                         .HasColumnName("tenant_id");
 
-                    b.Property<decimal?>("TotalAmount")
-                        .HasColumnType("decimal(10, 2)")
-                        .HasColumnName("total_amount");
-
-                    b.HasKey("InvoiceId")
-                        .HasName("PK__Invoice__F58DFD490AFB7D4B");
-
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("ProductId");
 
                     b.HasIndex("TenantId");
-
-                    b.ToTable("Invoice");
-                });
-
-            modelBuilder.Entity("Group6_WebApi.Models.InvoiceDetail", b =>
-                {
-                    b.Property<int>("DetailId")
-                        .HasColumnType("int")
-                        .HasColumnName("detail_id");
-
-                    b.Property<int?>("InvoiceId")
-                        .HasColumnType("int")
-                        .HasColumnName("invoice_id");
-
-                    b.Property<decimal?>("Price")
-                        .HasColumnType("decimal(10, 2)")
-                        .HasColumnName("price");
-
-                    b.Property<int?>("ProductId")
-                        .HasColumnType("int")
-                        .HasColumnName("product_id");
-
-                    b.Property<int?>("Quantity")
-                        .HasColumnType("int")
-                        .HasColumnName("quantity");
-
-                    b.HasKey("DetailId")
-                        .HasName("PK__InvoiceD__38E9A224305D2688");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ProductId");
 
                     b.ToTable("InvoiceDetail");
                 });
@@ -263,7 +244,7 @@ namespace Group6_WebApi.Migrations
                         .HasColumnName("tenant_id");
 
                     b.HasKey("ProductId")
-                        .HasName("PK__Product__47027DF58055AEFD");
+                        .HasName("PK__Product__47027DF59676B298");
 
                     b.HasIndex("TenantId");
 
@@ -282,7 +263,7 @@ namespace Group6_WebApi.Migrations
                         .HasColumnName("tenant_name");
 
                     b.HasKey("TenantId")
-                        .HasName("PK__Tenant__D6F29F3E743A1727");
+                        .HasName("PK__Tenant__D6F29F3ED8C023AE");
 
                     b.ToTable("Tenant");
                 });
@@ -292,12 +273,12 @@ namespace Group6_WebApi.Migrations
                     b.HasOne("Group6_WebApi.Models.Company", "Company")
                         .WithMany("Accounts")
                         .HasForeignKey("CompanyId")
-                        .HasConstraintName("FK__Account__company__4F7CD00D");
+                        .HasConstraintName("FK__Account__company__52593CB8");
 
                     b.HasOne("Group6_WebApi.Models.Tenant", "Tenant")
                         .WithMany("Accounts")
                         .HasForeignKey("TenantId")
-                        .HasConstraintName("FK__Account__tenant___4E88ABD4");
+                        .HasConstraintName("FK__Account__tenant___534D60F1");
 
                     b.Navigation("Company");
 
@@ -319,12 +300,12 @@ namespace Group6_WebApi.Migrations
                     b.HasOne("Group6_WebApi.Models.Company", "Company")
                         .WithMany("Customers")
                         .HasForeignKey("CompanyId")
-                        .HasConstraintName("FK__Customer__compan__5535A963");
+                        .HasConstraintName("FK__Customer__compan__4E88ABD4");
 
                     b.HasOne("Group6_WebApi.Models.Tenant", "Tenant")
                         .WithMany("Customers")
                         .HasForeignKey("TenantId")
-                        .HasConstraintName("FK__Customer__tenant__5629CD9C");
+                        .HasConstraintName("FK__Customer__tenant__4F7CD00D");
 
                     b.Navigation("Company");
 
@@ -336,21 +317,14 @@ namespace Group6_WebApi.Migrations
                     b.HasOne("Group6_WebApi.Models.Customer", "Customer")
                         .WithMany("Invoices")
                         .HasForeignKey("CustomerId")
-                        .HasConstraintName("FK__Invoice__custome__5AEE82B9");
-
-                    b.HasOne("Group6_WebApi.Models.Product", "Product")
-                        .WithMany("Invoices")
-                        .HasForeignKey("ProductId")
-                        .HasConstraintName("FK__Invoice__product__59FA5E80");
+                        .HasConstraintName("FK__Invoice__custome__59063A47");
 
                     b.HasOne("Group6_WebApi.Models.Tenant", "Tenant")
                         .WithMany("Invoices")
                         .HasForeignKey("TenantId")
-                        .HasConstraintName("FK__Invoice__tenant___59063A47");
+                        .HasConstraintName("FK__Invoice__tenant___59FA5E80");
 
                     b.Navigation("Customer");
-
-                    b.Navigation("Product");
 
                     b.Navigation("Tenant");
                 });
@@ -358,18 +332,25 @@ namespace Group6_WebApi.Migrations
             modelBuilder.Entity("Group6_WebApi.Models.InvoiceDetail", b =>
                 {
                     b.HasOne("Group6_WebApi.Models.Invoice", "Invoice")
-                        .WithMany("InvoiceDetails")
+                        .WithMany()
                         .HasForeignKey("InvoiceId")
-                        .HasConstraintName("FK__InvoiceDe__invoi__60A75C0F");
+                        .HasConstraintName("FK__InvoiceDe__invoi__5BE2A6F2");
 
                     b.HasOne("Group6_WebApi.Models.Product", "Product")
-                        .WithMany("InvoiceDetails")
+                        .WithMany()
                         .HasForeignKey("ProductId")
-                        .HasConstraintName("FK__InvoiceDe__produ__619B8048");
+                        .HasConstraintName("FK__InvoiceDe__produ__5CD6CB2B");
+
+                    b.HasOne("Group6_WebApi.Models.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .HasConstraintName("FK__InvoiceDe__tenan__5DCAEF64");
 
                     b.Navigation("Invoice");
 
                     b.Navigation("Product");
+
+                    b.Navigation("Tenant");
                 });
 
             modelBuilder.Entity("Group6_WebApi.Models.Product", b =>
@@ -377,7 +358,7 @@ namespace Group6_WebApi.Migrations
                     b.HasOne("Group6_WebApi.Models.Tenant", "Tenant")
                         .WithMany("Products")
                         .HasForeignKey("TenantId")
-                        .HasConstraintName("FK__Product__tenant___52593CB8");
+                        .HasConstraintName("FK__Product__tenant___5629CD9C");
 
                     b.Navigation("Tenant");
                 });
@@ -391,18 +372,6 @@ namespace Group6_WebApi.Migrations
 
             modelBuilder.Entity("Group6_WebApi.Models.Customer", b =>
                 {
-                    b.Navigation("Invoices");
-                });
-
-            modelBuilder.Entity("Group6_WebApi.Models.Invoice", b =>
-                {
-                    b.Navigation("InvoiceDetails");
-                });
-
-            modelBuilder.Entity("Group6_WebApi.Models.Product", b =>
-                {
-                    b.Navigation("InvoiceDetails");
-
                     b.Navigation("Invoices");
                 });
 

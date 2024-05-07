@@ -16,31 +16,18 @@ public partial class Invoice
     [Column("tenant_id")]
     public int? TenantId { get; set; }
 
-    [Column("product_id")]
-    public int? ProductId { get; set; }
-
     [Column("customer_id")]
     public int? CustomerId { get; set; }
 
     [Column("invoice_date", TypeName = "datetime")]
     public DateTime? InvoiceDate { get; set; }
 
-    [Column("status")]
+    [Column("invoice_status")]
     [StringLength(50)]
-    public string? Status { get; set; }
+    public string? InvoiceStatus { get; set; }
 
     [Column("total_amount", TypeName = "decimal(10, 2)")]
     public decimal? TotalAmount { get; set; }
-
-    [Column("product_name")]
-    [StringLength(255)]
-    public string? ProductName { get; set; }
-
-    [Column("quantity")]
-    public int? Quantity { get; set; }
-
-    [Column("price", TypeName = "decimal(10, 2)")]
-    public decimal? Price { get; set; }
 
     [Column("customer_name")]
     [StringLength(255)]
@@ -52,22 +39,12 @@ public partial class Invoice
     [Column("tax_rate")]
     public int? TaxRate { get; set; }
 
-    [Column("detail_id")]
-    public int? DetailId { get; set; }
-
     [Column("note", TypeName = "text")]
     public string? Note { get; set; }
 
     [ForeignKey("CustomerId")]
     [InverseProperty("Invoices")]
     public virtual Customer? Customer { get; set; }
-
-    [InverseProperty("Invoice")]
-    public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
-
-    [ForeignKey("ProductId")]
-    [InverseProperty("Invoices")]
-    public virtual Product? Product { get; set; }
 
     [ForeignKey("TenantId")]
     [InverseProperty("Invoices")]

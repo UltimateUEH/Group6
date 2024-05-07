@@ -6,18 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Group6_WebApi.Models;
 
+[Keyless]
 [Table("InvoiceDetail")]
 public partial class InvoiceDetail
 {
-    [Key]
-    [Column("detail_id")]
-    public int DetailId { get; set; }
-
     [Column("invoice_id")]
     public int? InvoiceId { get; set; }
 
+    [Column("tenant_id")]
+    public int? TenantId { get; set; }
+
     [Column("product_id")]
     public int? ProductId { get; set; }
+
+    [Column("product_name")]
+    [StringLength(255)]
+    public string? ProductName { get; set; }
 
     [Column("quantity")]
     public int? Quantity { get; set; }
@@ -26,10 +30,11 @@ public partial class InvoiceDetail
     public decimal? Price { get; set; }
 
     [ForeignKey("InvoiceId")]
-    [InverseProperty("InvoiceDetails")]
     public virtual Invoice? Invoice { get; set; }
 
     [ForeignKey("ProductId")]
-    [InverseProperty("InvoiceDetails")]
     public virtual Product? Product { get; set; }
+
+    [ForeignKey("TenantId")]
+    public virtual Tenant? Tenant { get; set; }
 }

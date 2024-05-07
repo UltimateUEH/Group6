@@ -31,7 +31,6 @@ namespace Group6_WebApi
 
             app.UseAuthorization();
 
-
             app.MapControllers();
 
             app.Run();
