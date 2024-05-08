@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group6_WebApi", "Group6_WebApi\Group6_WebApi.csproj", "{992309D2-3364-401C-A501-BBBCDA6A7F6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Group6_MVC", "Group6_MVC\Group6_MVC.csproj", "{CB3DDBAF-D044-47B2-805C-00120DD4A664}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Group6_MVC", "Group6_MVC\Group6_MVC.csproj", "{CB3DDBAF-D044-47B2-805C-00120DD4A664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
