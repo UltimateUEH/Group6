@@ -9,10 +9,6 @@ namespace Group6_WebApi.Models;
 [Table("InvoiceDetail")]
 public partial class InvoiceDetail
 {
-    //[Key]
-    //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    //public int InvoiceDetailId { get; set; }
-
 
     [Column("invoice_id")]
     public int? InvoiceId { get; set; }
