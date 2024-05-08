@@ -1,19 +1,26 @@
+﻿using Microsoft.AspNetCore.Mvc;
 using Group6_MVC.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
 namespace Group6_MVC.Controllers
 {
-    public class Login_RegisterController : Controller
+    public class LoginController : Controller
     {
-        private readonly ILogger<Login_RegisterController> _logger;
+        private readonly ILogger<LoginController> _logger;
+        private readonly HttpClient _httpClient;
 
-        public Login_RegisterController(ILogger<Login_RegisterController> logger)
+        public LoginController(ILogger<LoginController> logger, HttpClient httpClient)
         {
             _logger = logger;
+            _httpClient = httpClient;
         }
 
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
         {
             return View();
         }

@@ -15,29 +15,9 @@ namespace Group6_MVC.Controllers
             _httpClient = httpClient;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
-
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            // Thiết lập BaseAddress
-            _httpClient.BaseAddress = new Uri("https://localhost:7115/api/"); // change thanh cai port cua moi nguoi
-
-            // Gửi yêu cầu với URI tương đối
-            var response = await _httpClient.GetAsync("Invoice");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var invoices = await response.Content.ReadFromJsonAsync<List<Group6_WebApi.Models.Invoice>>();
-
-                return View(invoices);
-            }
-            else
-            {
-                return View(new List<Group6_WebApi.Models.Invoice>());
-            }
+            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

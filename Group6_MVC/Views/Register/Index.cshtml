@@ -1,5 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@* @page
+@model YourNamespace.RegisterModel *@
+@page "/Register"
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+    <link rel="stylesheet" href="~/css/styleRegister.css">
+</head>
+<body>
+    <div class="register-container">
+        <h2>Đăng ký</h2>
+        <input type="text" placeholder="Tên đăng nhập">
+        <div class="password-container">
+            <input type="password" id="passwordInput" placeholder="Mật khẩu">
+            <span class="toggle-password" onclick="togglePasswordVisibility()">
+                <i id="passwordIcon" class="fa fa-eye"></i>
+            </span>
+        </div>
+        <input type="password" id="confirmPasswordInput" placeholder="Nhập lại mật khẩu">
+        <input type="text" placeholder="Nhập tên công ty">
+        <div>Nếu bạn đã có tài khoản, bấm vào đây để <a href="Login" class="register-link">Đăng Nhập</a>.</div>
+        <button class="register-button">Đăng ký</button>
+    </div>
+
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("passwordInput");
+            var passwordIcon = document.getElementById("passwordIcon");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordIcon.classList.remove("fa-eye");
+                passwordIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                passwordIcon.classList.remove("fa-eye-slash");
+                passwordIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
+</body>
+</html>
