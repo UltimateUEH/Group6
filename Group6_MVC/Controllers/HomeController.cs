@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Group6_MVC.Models;
-using Group6_WebApi.Models;
 using System.Diagnostics;
 
 namespace Group6_MVC.Controllers
