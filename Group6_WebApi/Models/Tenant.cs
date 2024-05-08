@@ -27,6 +27,9 @@ public partial class Tenant
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
     [InverseProperty("Tenant")]
+    public virtual ICollection<InvoiceDetail> InvoiceDetails { get; set; } = new List<InvoiceDetail>();
+
+    [InverseProperty("Tenant")]
     public virtual ICollection<Invoice> Invoices { get; set; } = new List<Invoice>();
 
     [InverseProperty("Tenant")]
