@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+}
+
+.register-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.register-container input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-container .password-container {
+    position: relative;
+    width: 340px;
+    left: 10px;
+}
+
+.register-container .password-container input[type="password"] {
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-container .password-container .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+}
+
+.register-container .register-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.register-container .register-button:hover {
+    background-color: #dc1714;
+}
+
+.login-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #888;
+    text-decoration: underline;
+    cursor: pointer;
+}
