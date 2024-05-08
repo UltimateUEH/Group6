@@ -1,4 +1,6 @@
 using Group6_MVC.Models;
+using Group6_WebApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
