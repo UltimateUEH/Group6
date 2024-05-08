@@ -1,3 +1,6 @@
+using Group6_MVC.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace Group6_MVC
 {
     public class Program
@@ -9,6 +12,9 @@ namespace Group6_MVC
             // Add services to the container.
             // Add framework services.
             builder.Services.AddMvc();
+
+            builder.Services.AddDbContext<Group06Context>(options =>
+                           options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add HttpClient
             builder.Services.AddHttpClient();
@@ -36,7 +42,7 @@ namespace Group6_MVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Login_Register}/{action=Index}/{id?}");
 
             app.Run();
         }
