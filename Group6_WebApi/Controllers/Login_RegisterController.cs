@@ -19,7 +19,6 @@ namespace Group6_WebApi.Controllers
             _context = context;
         }
 
-
         [HttpPost("login")]
         public IActionResult Login([FromBody] Account login)
         {
