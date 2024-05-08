@@ -1,4 +1,4 @@
-﻿using Group6_WebApi.Models;
+using Group6_WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
