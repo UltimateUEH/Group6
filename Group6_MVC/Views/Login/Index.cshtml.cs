@@ -8,5 +8,10 @@ namespace Group6_MVC.Views.Login
         public void OnGet()
         {
         }
+
+        public void OnPost()
+        {
+
+        }
     }
 }
