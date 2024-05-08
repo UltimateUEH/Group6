@@ -5,11 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace Group6_WebApi.Models;
-
 [Keyless]
 [Table("InvoiceDetail")]
 public partial class InvoiceDetail
 {
+    //[Key]
+    //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    //public int InvoiceDetailId { get; set; }
+
+
     [Column("invoice_id")]
     public int? InvoiceId { get; set; }
 

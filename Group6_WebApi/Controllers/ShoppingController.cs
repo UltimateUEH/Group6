@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
@@ -39,29 +38,45 @@ namespace Group6_WebApi.Controllers
             }
         }
 
-        [HttpPost("{productId}")]
-        public IActionResult AddToInvoice(int productId, int accountId)
+        [HttpPost("add-to-invoice")]
+        public IActionResult AddToInvoice([FromBody] AddToInvoiceRequestModel requestModel)
         {
             try
             {
-                var userId = GetUserIdFromContext(HttpContext);
+                //var userId = GetUserIdFromContext(HttpContext);
 
-                if (!accountId.ToString().Equals(userId) || String.IsNullOrEmpty(accountId.ToString()))
+                //if (!requestModel.AccountId.ToString().Equals(userId) || String.IsNullOrEmpty(userId))
+                //{
+                //    return StatusCode(401, "Vui lòng đăng nhập hoặc không có quyền truy cập.");
+                //}
+
+                var customer = _context.Accounts.FirstOrDefault(a => a.AccountId == requestModel.AccountId);
+
+                if (customer == null)
                 {
-                    return StatusCode(500, "Vui lòng đăng nhập");
+                    return NotFound("Không tìm thấy thông tin khách hàng.");
                 }
 
-                string? customerName = _context.Accounts
-                  .Where(account => account.AccountId == accountId)
-                  .Select(account => account.Username)
-                  .FirstOrDefault();
+                var product = _context.Products.FirstOrDefault(p => p.ProductId == requestModel.ProductId);
 
-                Random random = new Random();
+                if (product == null)
+                {
+                    return NotFound("Không tìm thấy thông tin sản phẩm.");
+                }
+
+                var tenant = _context.Tenants.FirstOrDefault(t => t.TenantId == requestModel.TenantId);
+
+                if (tenant == null)
+                {
+                    return NotFound("Không tìm thấy thông tin khách hàng.");
+                }
+
                 var invoice = new Invoice
                 {
-                    InvoiceId = random.Next(1, 99999),
-                    CustomerId = accountId,
-                    CustomerName = customerName,
+                    InvoiceId = new Random().Next(1, 99999),
+                    CustomerId = requestModel.AccountId,
+                    CustomerName = customer.Username,
+                    TenantId = requestModel.TenantId, 
                     Discount = null,
                     InvoiceDate = DateTime.Now,
                     InvoiceStatus = "Chưa thanh toán",
@@ -69,29 +84,38 @@ namespace Group6_WebApi.Controllers
                     TotalAmount = null,
                     TaxRate = 10,
                 };
-
+                _context.Invoices.Add(invoice);
+                _context.SaveChanges();
                 var invoiceDetail = new InvoiceDetail
                 {
+                    //InvoiceDetailId = 1,
                     InvoiceId = invoice.InvoiceId,
-                    ProductId = productId,
-                    Quantity = 1,
-                    Price = _context.Products
-                        .Where(product => product.ProductId == productId)
-                        .Select(product => product.Price)
-                        .FirstOrDefault(),
+                    ProductId = requestModel.ProductId,
+                    Quantity = requestModel.Quantity,
+                    Price = product.Price,
+                    TenantId = requestModel.TenantId 
                 };
 
-                _context.Invoices.Add(invoice);
-                _context.InvoiceDetails.Add(invoiceDetail);
-                _context.SaveChanges();
+                
+                //_context.InvoiceDetails.Add(invoiceDetail);
+                //_context.SaveChanges(true);
 
-                return Ok();
+                return Ok("Thêm sản phẩm vào hóa đơn thành công.");
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                Console.WriteLine($"Đã xảy ra lỗi: {ex.ToString()}");
+
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Ngoại lệ bên trong: {ex.InnerException.ToString()}");
+                }
+
+                return StatusCode(500, "Đã xảy ra lỗi khi lưu các thay đổi vào cơ sở dữ liệu.");
             }
+
         }
+
 
         private string GetUserIdFromContext(HttpContext context)
         {

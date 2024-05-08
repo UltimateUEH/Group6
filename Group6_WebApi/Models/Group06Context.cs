@@ -78,6 +78,8 @@ public partial class Group06Context : DbContext
 
         modelBuilder.Entity<InvoiceDetail>(entity =>
         {
+            //entity.HasKey(e => e.InvoiceDetailId).HasName("PK_InvoiceDetail");
+
             entity.HasOne(d => d.Invoice).WithMany().HasConstraintName("FK__InvoiceDe__invoi__5BE2A6F2");
 
             entity.HasOne(d => d.Product).WithMany().HasConstraintName("FK__InvoiceDe__produ__5CD6CB2B");
