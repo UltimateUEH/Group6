@@ -17,18 +17,18 @@ namespace Group6_WebApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll(int tenantId)
         {
-            var invoiceDetailList = _context.InvoiceDetails.ToList();
+            var invoiceDetailList = _context.InvoiceDetails.Where(t => t.TenantId == tenantId).ToList();
 
             return Ok(invoiceDetailList);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("{invoiceId}")]
+        public IActionResult GetById(int invoiceId, int tenantId)
         {
-            var invoiceDetail = _context.InvoiceDetails.FirstOrDefault(i =>
-                i.InvoiceId == id);
+            var invoiceDetail = _context.InvoiceDetails.Where(t => t.TenantId == tenantId).FirstOrDefault(i =>
+                i.InvoiceId == invoiceId);
 
             if (invoiceDetail != null)
             {

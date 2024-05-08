@@ -16,19 +16,19 @@ namespace Group6_WebApi.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpGet("{tenantId}")]
+        public IActionResult GetAll(int tenantId)
         {
-            var invoiceDetailList = _context.InvoiceDetails.ToList();
+            var invoiceDetailList = _context.InvoiceDetails.Where(t => t.TenantId == tenantId).ToList();
 
             return Ok(invoiceDetailList);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("{invoiceId}/{tenantId}")]
+        public IActionResult GetById(int invoiceId, int tenantId)
         {
-            var invoiceDetail = _context.InvoiceDetails.FirstOrDefault(i =>
-                i.InvoiceId == id);
+            var invoiceDetail = _context.InvoiceDetails.Where(t => t.TenantId == tenantId).FirstOrDefault(i =>
+                i.InvoiceId == invoiceId);
 
             if (invoiceDetail != null)
             {
@@ -91,11 +91,11 @@ namespace Group6_WebApi.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, InvoiceDetail invoiceDetail)
+        [HttpPut("{invoiceId}")]
+        public IActionResult Update(int invoiceId, InvoiceDetail invoiceDetail)
         {
             var existingInvoiceDetail = _context.InvoiceDetails.SingleOrDefault(i =>
-                           i.InvoiceId == id);
+                           i.InvoiceId == invoiceId);
 
             if (existingInvoiceDetail != null)
             {
@@ -138,19 +138,22 @@ namespace Group6_WebApi.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{invoiceId}")]
+        public IActionResult Delete(int invoiceId)
         {
-            try
+            var invoiceDatails = _context.InvoiceDetails.SingleOrDefault(i =>
+                           i.InvoiceId == invoiceId);
+
+            if (invoiceDatails != null)
             {
-                var query = $"DELETE FROM InvoiceDetail WHERE invoice_id = {id}";
-                _context.Database.ExecuteSqlRaw(query);
+                _context.InvoiceDetails.Remove(invoiceDatails);
+                _context.SaveChanges();
 
                 return Ok();
             }
-            catch
+            else
             {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return NotFound();
             }
         }
     }
