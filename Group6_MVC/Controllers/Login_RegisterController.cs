@@ -11,15 +11,9 @@ namespace Group6_MVC.Controllers
         public Login_RegisterController(ILogger<Login_RegisterController> logger)
         {
             _logger = logger;
-            // check new u see
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }

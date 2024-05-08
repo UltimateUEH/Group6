@@ -14,7 +14,6 @@ namespace Group6_MVC.Controllers
         {
             _logger = logger;
             _httpClient = httpClient;
-            // check new u see
         }
 
         //public IActionResult Index()
@@ -32,19 +31,14 @@ namespace Group6_MVC.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var invoices = await response.Content.ReadFromJsonAsync<List<Invoice>>();
+                var invoices = await response.Content.ReadFromJsonAsync<List<Group6_WebApi.Models.Invoice>>();
 
                 return View(invoices);
             }
             else
             {
-                return View(new List<Invoice>());
+                return View(new List<Group6_WebApi.Models.Invoice>());
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
