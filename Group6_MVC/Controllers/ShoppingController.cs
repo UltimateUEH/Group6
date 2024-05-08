@@ -70,7 +70,19 @@ namespace Group6_WebApi.Controllers
                     TaxRate = 10,
                 };
 
+                var invoiceDetail = new InvoiceDetail
+                {
+                    InvoiceId = invoice.InvoiceId,
+                    ProductId = productId,
+                    Quantity = 1,
+                    Price = _context.Products
+                        .Where(product => product.ProductId == productId)
+                        .Select(product => product.Price)
+                        .FirstOrDefault(),
+                };
+
                 _context.Invoices.Add(invoice);
+                _context.InvoiceDetails.Add(invoiceDetail);
                 _context.SaveChanges();
 
                 return Ok();
