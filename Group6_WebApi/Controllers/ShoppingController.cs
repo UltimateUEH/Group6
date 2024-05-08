@@ -46,10 +46,10 @@ namespace Group6_WebApi.Controllers
             {
                 var userId = GetUserIdFromContext(HttpContext);
 
-                if (!accountId.ToString().Equals(userId) || String.IsNullOrEmpty(accountId.ToString()))
-                {
-                    return StatusCode(500, "Vui lòng đăng nhập");
-                }
+                //if (!accountId.ToString().Equals(userId) || String.IsNullOrEmpty(accountId.ToString()))
+                //{
+                //    return StatusCode(500, "Vui lòng đăng nhập");
+                //}
 
                 string? customerName = _context.Accounts
                   .Where(account => account.AccountId == accountId)

@@ -15,19 +15,19 @@ namespace Group6_WebApi.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult GetAll()
+        [HttpGet("{tenantId}")]
+        public IActionResult GetAll(int tenantId)
         {
-            var invoiceList = _context.Invoices.ToList();
+            var invoiceList = _context.Invoices.Where(t => t.TenantId == tenantId).ToList();
 
             return Ok(invoiceList);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        [HttpGet("{invoiceId}/{tenantId}")]
+        public IActionResult GetById(int invoiceId, int tenantId)
         {
-            var invoice = _context.Invoices.SingleOrDefault(i =>
-                i.InvoiceId == id);
+            var invoice = _context.Invoices.Where(t => t.TenantId == tenantId).SingleOrDefault(i =>
+                i.InvoiceId == invoiceId);
 
             if (invoice != null)
             {
@@ -38,6 +38,7 @@ namespace Group6_WebApi.Controllers
                 return NotFound();
             }
         }
+
 
         [HttpPost]
         public IActionResult Create(Invoice invoice)
@@ -111,11 +112,11 @@ namespace Group6_WebApi.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, Invoice invoice)
+        [HttpPut("{invoiceId}")]
+        public IActionResult Update(int invoiceId, Invoice invoice)
         {
             var existingInvoice = _context.Invoices.SingleOrDefault(i =>
-                           i.InvoiceId == id);
+                           i.InvoiceId == invoiceId);
 
             if (existingInvoice != null)
             {
@@ -180,11 +181,11 @@ namespace Group6_WebApi.Controllers
         }
 
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{invoiceId}")]
+        public IActionResult Delete(int invoiceId)
         {
             var invoice = _context.Invoices.SingleOrDefault(i =>
-                           i.InvoiceId == id);
+                           i.InvoiceId == invoiceId);
 
             if (invoice != null)
             {

@@ -10,14 +10,16 @@ namespace Group6_WebApi.Models;
 [Table("InvoiceDetail")]
 public partial class InvoiceDetail
 {
+    [Key]
     [Column("invoice_id")]
     public int? InvoiceId { get; set; }
 
-    [Column("tenant_id")]
-    public int? TenantId { get; set; }
-
+    [Key]
     [Column("product_id")]
     public int? ProductId { get; set; }
+
+    [Column("tenant_id")]
+    public int? TenantId { get; set; }
 
     [Column("product_name")]
     [StringLength(255)]
