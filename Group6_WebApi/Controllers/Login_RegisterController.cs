@@ -19,21 +19,22 @@ namespace Group6_WebApi.Controllers
             _context = context;
         }
 
+
         [HttpPost("login")]
         public IActionResult Login([FromBody] Account login)
         {
-            string hashedPassword = HashPassword(login.Password);
-            var user = _context.Accounts.FirstOrDefault(u => u.Email == login.Email && u.Password == hashedPassword);
+            login.Password = HashPassword(login.Password);
+            
+            // Kiểm tra xem tài khoản có tồn tại với thông tin đăng nhập được cung cấp không
+            var account = _context.Accounts.FirstOrDefault(u => u.Email == login.Email && u.Password == login.Password && u.CompanyId == login.CompanyId);
+            if (account == null)
+            {
+                return BadRequest("Email, mật khẩu hoặc tên công ty không đúng.");
+            }
 
-            if (user != null)
-            {
-                return Ok("Login successful!");
-            }
-            else
-            {
-                return BadRequest("Invalid credentials");
-            }
+            return Ok(account);
         }
+
 
         [HttpPost("register")]
         public IActionResult Register(Account registration)

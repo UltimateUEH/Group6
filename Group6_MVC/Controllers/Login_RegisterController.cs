@@ -21,6 +21,11 @@ namespace Group6_MVC.Controllers
             return View();
         }
 
+        public IActionResult ShowLoginForm()
+        {
+            return View("LoginForm"); // Tr? v? view c?a form ??ng nh?p
+        }
+
         public IActionResult Privacy()
         {
             return View();
