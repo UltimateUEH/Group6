@@ -10,22 +10,19 @@ namespace Group6_WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController : ControllerBase
+    public class Login_RegisterController : ControllerBase
     {
         private readonly Group06Context _context;
 
-        public LoginController(Group06Context context)
+        public Login_RegisterController(Group06Context context)
         {
             _context = context;
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody] Account login)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] Account login)
         {
-            // Hash the provided password
             string hashedPassword = HashPassword(login.Password);
-
-            // Find user by username and hashed password
             var user = _context.Accounts.FirstOrDefault(u => u.Email == login.Email && u.Password == hashedPassword);
 
             if (user != null)
@@ -38,61 +35,26 @@ namespace Group6_WebApi.Controllers
             }
         }
 
-        private string HashPassword(string password)
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                // Compute hash of the password
-                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                // Convert byte array to a string representation
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                return builder.ToString();
-            }
-        }
-    }
-
-    [Route("api/[controller]")]
-    [ApiController]
-    public class RegisterController : ControllerBase
-    {
-        private readonly Group06Context _context;
-
-        public RegisterController(Group06Context context)
-        {
-            _context = context;
-        }
-
-        [HttpPost]
+        [HttpPost("register")]
         public IActionResult Register(Account registration)
         {
-            // Kiểm tra xem tên người dùng đã tồn tại chưa
             if (_context.Accounts.Any(u => u.Email == registration.Email))
             {
                 return BadRequest("Email already exists");
             }
 
-            // Hash the password
             registration.Password = HashPassword(registration.Password);
-
-            // Tạo một bản ghi mới và thêm vào cơ sở dữ liệu
             _context.Accounts.Add(registration);
             _context.SaveChanges();
 
-            return Ok("");
+            return Ok("Registration successful!");
         }
+
         private string HashPassword(string password)
         {
             using (var sha256 = SHA256.Create())
             {
-                // Compute hash of the password
                 byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-                // Convert byte array to a string representation
                 StringBuilder builder = new StringBuilder();
                 for (int i = 0; i < bytes.Length; i++)
                 {
@@ -102,10 +64,5 @@ namespace Group6_WebApi.Controllers
             }
         }
     }
-
-    [AllowAnonymous, HttpGet("forgot-password")]
-    public async IActionResult ForgotPassword()
-    {
-        return View();
-    }
 }
+
