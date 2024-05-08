@@ -25,7 +25,7 @@ namespace Group6_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             // Thiết lập BaseAddress
-            _httpClient.BaseAddress = new Uri("https://localhost:7115/api/"); // change thanh cai port cua moi nguoi
+            _httpClient.BaseAddress = new Uri("https://localhost:7283/api/"); // change thanh cai port cua moi nguoi
 
             // Gửi yêu cầu với URI tương đối
             var response = await _httpClient.GetAsync("Invoice");

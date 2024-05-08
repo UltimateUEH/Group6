@@ -1,6 +1,5 @@
-@{
-    ViewData["Title"] = "Home Page";
-}
+@* @page
+@model YourNamespace.HomeModel //Syntax Razor thay của mấy khứa vô đây*@ 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,7 +11,7 @@
     <link rel="stylesheet" href="~/css/styleView.css">
 </head>
 <body>
-    <header>
+        <header>
         <h1>Group 6</h1>
         <div class="logout-home">
             <button onclick="logout()" style="background-color: #E68484; "><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
@@ -21,34 +20,54 @@
     <main>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Tìm kiếm...">
-            <!-- Sử dụng icon kính lúp thay vì chữ "Tìm" -->
             <button onclick="search()" style="background-color: #89AAE6;"><i class="fas fa-search"></i></button>
         </div>
         <br>
         <div class="quick-key">
             <h2>Quick key</h2>
-            <!-- Hiển thị các nút sản phẩm -->
-            <div id="quickKeyButtons" >
-                <button onclick="resetQuickKey()" style="background-color: #89AAE6; color: #fff; float:right;">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
+            <div id="quickKeyButtons">
+                @foreach (var product in Model.RandomProducts)
+                {
+                    <button onclick="addToCart('@product.Name')" style="background-color: #89AAE6; color: #fff; float:right;">
+                        @product.Name
+                    </button>
+                }
             </div>
+            <br>
+            <button onclick="resetQuickKey()" style="background-color: #89AAE6; color: #fff; float:right;">
+                <i class="fas fa-sync-alt"></i>
+            </button>
         </div>
         <br>
-        <div    div class="cart">
-    <h2>Giỏ hàng</h2>
-    <ul id="cartList"></ul>
-    <button onclick="addToPayment()" style="background-color: #89AAE6;">Thêm vào thanh toán</button>
+        <div class="cart">
+            <h2>Giỏ hàng</h2>
+            <ul id="cartList">
+                @foreach (var item in Model.CartItems)
+                {
+                    <li>@item.Name - @item.Price</li>
+                }
+            </ul>
+            <button onclick="addToPayment()" style="background-color: #89AAE6;">Thêm vào thanh toán</button>
         </div>
         <br>
-    <div class="customer">
-        <h2>Khách Hàng</h2>
-        <select id="customerSelect" style="border-radius: 10px;, background-color: fade;border: none; margin-top: 20px"></select>
-        <input type="text" id="customerName" placeholder="Nhập tên khách hàng" style="border-radius: 10px;" >
-        <button onclick="addCustomer()"style="background-color: #89AAE6;">Thêm Khách Hàng</button>
-        <ul id="customerList"></ul>
-    </div>
-        <div class="transiction">
+        <div class="customer">
+            <h2>Khách Hàng</h2>
+            <select id="customerSelect" style="border-radius: 10px;, background-color: fade;border: none; margin-top: 20px">
+                @foreach (var customer in Model.Customers)
+                {
+                    <option value="@customer.Id">@customer.Name</option>
+                }
+            </select>
+            <input type="text" id="customerName" placeholder="Nhập tên khách hàng" style="border-radius: 10px;" >
+            <button onclick="addCustomer()" style="background-color: #89AAE6;">Thêm Khách Hàng</button>
+            <ul id="customerList">
+                @foreach (var customer in Model.Customers)
+                {
+                    <li>@customer.Name - @customer.Email</li>
+                }
+            </ul>
+        </div>
+        <div class="transaction">
             <h2>Màn hình thanh toán</h2>
             <table id="paymentTable">
                 <thead>
@@ -60,40 +79,37 @@
                     </tr>
                 </thead>
                 <tbody id="paymentItems">
-                    <!-- Các dòng sản phẩm và thông tin thanh toán sẽ được thêm bằng JavaScript -->
+                    @foreach (var item in Model.PaymentItems)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Price</td>
+                            <td>@item.Tax</td>
+                            <td>@item.Total</td>
+                        </tr>
+                    }
                 </tbody>
                 <tfoot>
-            <tr>
-                <td colspan="3" style="text-align: right;">Tổng:</td>
-                <td id="totalAmount">0.00</td>
-            </tr>
-        </tfoot>
+                    <tr>
+                        <td colspan="3" style="text-align: right;">Tổng:</td>
+                        <td>@Model.TotalAmount</td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </main>
     <script>
-        // Mảng chứa danh sách sản phẩm
-        const products = [
-            { name: "Sản phẩm A", price: 100 },
-            { name: "Sản phẩm B", price: 200 },
-            { name: "Sản phẩm C", price: 150 },
-            { name: "Con chó A", price: 120 },
-            { name: "Con chó B", price: 150 },
-            { name: "Con chó C", price: 180 },
-            // Thêm sản phẩm khác nếu cần
-        ];
+        // JavaScript code
+        const products = @Html.Raw(Json.Serialize(Model.Products));
 
-        // Mảng chứa giỏ hàng
         let cartItems = [];
 
-        // Hàm tìm kiếm
         function search() {
             const searchTerm = document.getElementById("searchInput").value.toLowerCase();
             const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchTerm));
             displayProducts(filteredProducts);
         }
 
-        // Hàm hiển thị danh sách sản phẩm và thông tin thanh toán
         function displayProducts(products) {
             const tableBody = document.querySelector("#paymentTable tbody");
             tableBody.innerHTML = "";
@@ -115,7 +131,6 @@
                 tableBody.innerHTML += row;
             });
 
-            // Thêm dòng tổng cộng
             const totalRow = `
                 <tr>
                     <th colspan="3">Tổng cộng</th>
@@ -125,32 +140,9 @@
             tableBody.innerHTML += totalRow;
         }
 
-    // Lấy ra 4 sản phẩm ngẫu nhiên từ mảng products
-    const randomProducts = shuffleArray(products).slice(0, 4);
-    // Tạo nút cho từng sản phẩm trong Quick key
-    const quickKeyContainer = document.getElementById("quickKeyButtons");
-    randomProducts.forEach(product => {
-        const button = document.createElement("button");
-        button.textContent = product.name;
-        button.onclick = function() {
-            addToCart(product);
-        };
-        button.style.color = "black";
-        quickKeyContainer.appendChild(button);
-    });
-
-// Hàm đảo vị trí phần tử trong mảng ngẫu nhiên
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-
         // Hàm thêm sản phẩm vào giỏ hàng
-        function addToCart(product) {
+        function addToCart(productName, productPrice) {
+            const product = { name: productName, price: productPrice };
             cartItems.push(product);
             displayCart();
         }
@@ -194,8 +186,7 @@ function shuffleArray(array) {
             cartItems.splice(index, 1);
             displayCart(); // Cập nhật lại giao diện giỏ hàng
         }
-    </script>
-    <script>
+
         // Mảng chứa danh sách khách hàng
         let customers = [];
 
@@ -210,30 +201,29 @@ function shuffleArray(array) {
                 alert("Vui lòng nhập tên khách hàng!");
             }
         }
-// Hàm hiển thị danh sách khách hàng
-function displayCustomers() {
-    const customerList = document.getElementById("customerList");
-    customerList.innerHTML = "";
-    customers.forEach(customer => {
-        const li = document.createElement("li");
-        li.textContent = customer;
-        customerList.appendChild(li);
-    });
-}
 
-// Hàm hiển thị tên khách hàng trên màn hình thanh toán
-function displayCustomerOnPayment(customerName) {
-    const paymentTable = document.getElementById("paymentTable");
-    const tbody = paymentTable.querySelector("tbody");
-    const row = `
-        <tr>
-            <td colspan="4">Khách hàng: ${customerName}</td>
-        </tr>
-    `;
-    tbody.insertAdjacentHTML("afterbegin", row); // Chèn dòng vào đầu tbody
-}
+        // Hàm hiển thị danh sách khách hàng
+        function displayCustomers() {
+            const customerList = document.getElementById("customerList");
+            customerList.innerHTML = "";
+            customers.forEach(customer => {
+                const li = document.createElement("li");
+                li.textContent = customer;
+                customerList.appendChild(li);
+            });
+        }
 
-        
+        // Hàm hiển thị tên khách hàng trên màn hình thanh toán
+        function displayCustomerOnPayment(customerName) {
+            const paymentTable = document.getElementById("paymentTable");
+            const tbody = paymentTable.querySelector("tbody");
+            const row = `
+                <tr>
+                    <td colspan="4">Khách hàng: ${customerName}</td>
+                </tr>
+            `;
+            tbody.insertAdjacentHTML("afterbegin", row); // Chèn dòng vào đầu tbody
+        }
     </script>
 </body>
 </html>
