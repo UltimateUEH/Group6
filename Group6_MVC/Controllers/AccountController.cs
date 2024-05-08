@@ -1,4 +1,4 @@
-﻿using Group6_WebApi.Models;
+﻿using Group6_MVC.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
