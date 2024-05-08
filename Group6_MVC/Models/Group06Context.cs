@@ -36,7 +36,7 @@ public partial class Group06Context : DbContext
     {
         modelBuilder.Entity<Account>(entity =>
         {
-            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CD2E1EBC0B");
+            entity.HasKey(e => e.AccountId).HasName("PK__Account__46A222CD6E4C817C");
 
             entity.Property(e => e.AccountId).ValueGeneratedNever();
 
@@ -47,7 +47,7 @@ public partial class Group06Context : DbContext
 
         modelBuilder.Entity<Company>(entity =>
         {
-            entity.HasKey(e => e.CompanyId).HasName("PK__Company__3E267235A2A39D77");
+            entity.HasKey(e => e.CompanyId).HasName("PK__Company__3E2672352E176FF1");
 
             entity.Property(e => e.CompanyId).ValueGeneratedNever();
 
@@ -56,7 +56,7 @@ public partial class Group06Context : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB855CBD7A85");
+            entity.HasKey(e => e.CustomerId).HasName("PK__Customer__CD65CB8551EFA01C");
 
             entity.Property(e => e.CustomerId).ValueGeneratedNever();
 
@@ -67,7 +67,7 @@ public partial class Group06Context : DbContext
 
         modelBuilder.Entity<Invoice>(entity =>
         {
-            entity.HasKey(e => e.InvoiceId).HasName("PK__Invoice__F58DFD49EBCC577A");
+            entity.HasKey(e => e.InvoiceId).HasName("PK__Invoice__F58DFD498BC93769");
 
             entity.Property(e => e.InvoiceId).ValueGeneratedNever();
 
@@ -78,16 +78,22 @@ public partial class Group06Context : DbContext
 
         modelBuilder.Entity<InvoiceDetail>(entity =>
         {
-            entity.HasOne(d => d.Invoice).WithMany().HasConstraintName("FK__InvoiceDe__invoi__5BE2A6F2");
+            entity.HasKey(e => new { e.InvoiceId, e.ProductId }).HasName("PK__InvoiceD__B1FDDA9612106786");
 
-            entity.HasOne(d => d.Product).WithMany().HasConstraintName("FK__InvoiceDe__produ__5CD6CB2B");
+            entity.HasOne(d => d.Invoice).WithMany(p => p.InvoiceDetails)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__InvoiceDe__invoi__5CD6CB2B");
 
-            entity.HasOne(d => d.Tenant).WithMany().HasConstraintName("FK__InvoiceDe__tenan__5DCAEF64");
+            entity.HasOne(d => d.Product).WithMany(p => p.InvoiceDetails)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__InvoiceDe__produ__5DCAEF64");
+
+            entity.HasOne(d => d.Tenant).WithMany(p => p.InvoiceDetails).HasConstraintName("FK__InvoiceDe__tenan__5EBF139D");
         });
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__47027DF59676B298");
+            entity.HasKey(e => e.ProductId).HasName("PK__Product__47027DF5915A60F7");
 
             entity.Property(e => e.ProductId).ValueGeneratedNever();
 
@@ -96,7 +102,7 @@ public partial class Group06Context : DbContext
 
         modelBuilder.Entity<Tenant>(entity =>
         {
-            entity.HasKey(e => e.TenantId).HasName("PK__Tenant__D6F29F3ED8C023AE");
+            entity.HasKey(e => e.TenantId).HasName("PK__Tenant__D6F29F3E261E8E5C");
 
             entity.Property(e => e.TenantId).ValueGeneratedNever();
         });
